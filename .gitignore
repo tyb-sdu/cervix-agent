@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+build/
+dist/
+
+# Runtime project data must not be committed by default.
+.cervixagent/
+data/
+structures/
+runs/
+artifacts/
+logs/
+reports/
+
+# Local literature inventories and parser inspection exports are project data,
+# not source code.
+/CervixAgent_RAG*.xlsx
+/*.inspect.ndjson

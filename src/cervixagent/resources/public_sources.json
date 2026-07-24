@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "policy": {
+    "allow_list_only": true,
+    "commercial_or_restricted_sources": false,
+    "note": "这些来源只用于执行原方案所需的数据准备，不改变靶点、筛选参数或工作流程。"
+  },
+  "sources": {
+    "pdb_4xr8": {
+      "kind": "structure",
+      "target": "HPV_E6",
+      "record_id": "4XR8",
+      "url": "https://files.rcsb.org/download/4XR8.cif",
+      "landing_page": "https://www.rcsb.org/structure/4XR8",
+      "version": "current PDB archive record",
+      "license": "wwPDB/RCSB open-access structure data; retain source citation",
+      "relative_path": "structures/HPV_E6/4XR8.cif"
+    },
+    "pdb_2d0t": {
+      "kind": "structure",
+      "target": "IDO1",
+      "record_id": "2D0T",
+      "url": "https://files.rcsb.org/download/2D0T.cif",
+      "landing_page": "https://www.rcsb.org/structure/2D0T",
+      "version": "current PDB archive record",
+      "license": "wwPDB/RCSB open-access structure data; retain source citation",
+      "relative_path": "structures/IDO1/2D0T.cif"
+    },
+    "coconut_drug_discovery": {
+      "kind": "natural_products",
+      "record_id": "COCONUT_2024_08_DrugDiscovery",
+      "url": "https://coconut.s3.uni-jena.de/prod/downloads/2024-08/DD/COCONUT_2024_08_DrugDiscovery.tsv.zip",
+      "landing_page": "https://coconut.naturalproducts.net/download",
+      "version": "2024-08 drug-discovery TSV export",
+      "license": "CC0 1.0",
+      "relative_path": "data/raw/coconut/COCONUT_2024_08_DrugDiscovery.tsv.zip"
+    },
+    "lotus_smiles": {
+      "kind": "natural_products",
+      "record_id": "LOTUS_DB",
+      "url": "https://lotus.naturalproducts.net/download/smiles",
+      "landing_page": "https://lotus.naturalproducts.net/download",
+      "version": "legacy LOTUS snapshot served by the official download endpoint",
+      "license": "CC0 1.0; retain source citation",
+      "relative_path": "data/raw/lotus/LOTUS_DB.smi"
+    }
+  },
+  "groups": {
+    "structures": ["pdb_4xr8", "pdb_2d0t"],
+    "natural-products": ["coconut_drug_discovery", "lotus_smiles"],
+    "all": ["pdb_4xr8", "pdb_2d0t", "coconut_drug_discovery", "lotus_smiles"]
+  }
+}

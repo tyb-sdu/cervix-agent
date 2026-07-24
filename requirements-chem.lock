@@ -1,0 +1,5 @@
+# Resolved on Windows x86-64 with CPython 3.12 for the P1-02 engineering environment.
+# CervixAgent itself is installed from this repository in editable mode.
+numpy==2.5.1
+pillow==12.3.0
+rdkit==2026.3.3

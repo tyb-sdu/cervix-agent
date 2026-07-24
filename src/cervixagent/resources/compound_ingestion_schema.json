@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "name": "CervixAgent P1-02 compound ingestion contract",
+  "scope": "P1-02 ingestion only",
+  "scientific_filtering_allowed": false,
+  "record_policy": {
+    "retain_original_record": true,
+    "retain_invalid_record": true,
+    "remove_duplicate_record": false,
+    "salt_or_fragment_removal": false,
+    "tautomer_normalization": false,
+    "protonation_or_charge_normalization": false,
+    "stereochemistry_removal": false,
+    "canonical_isomeric_smiles_for_comparison": true
+  },
+  "record_fields": [
+    {"name": "record_key", "type": "text", "required": true, "description": "Stable key within one ingestion run"},
+    {"name": "source_name", "type": "text", "required": true},
+    {"name": "source_id", "type": "text", "required": true},
+    {"name": "original_smiles", "type": "text", "required": true},
+    {"name": "canonical_smiles", "type": "text", "required": false},
+    {"name": "fragment_count", "type": "integer", "required": false},
+    {"name": "validation_status", "type": "enum(valid,invalid)", "required": true},
+    {"name": "duplicate_of", "type": "text", "required": false},
+    {"name": "message", "type": "text", "required": true}
+  ],
+  "source_requirements": {
+    "required_sources": ["ECNPDB", "COCONUT", "LOTUS"],
+    "substitution_allowed": false,
+    "ecnpdb_current_status": "unresolved"
+  },
+  "formal_completion_gate": [
+    "All three required sources are identified and licensed",
+    "Raw file hashes and versions are recorded",
+    "Compound standardization rules are approved by a computational-chemistry reviewer",
+    "All source records, invalid records and duplicate flags are retained",
+    "The completed run passes seal verification"
+  ],
+  "explicitly_deferred_to_p1_04": [
+    "Michael acceptor classification",
+    "molecular-weight threshold",
+    "LogP threshold",
+    "hydrogen-bond donor and acceptor thresholds",
+    "PAINS filtering"
+  ]
+}

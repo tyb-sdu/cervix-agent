@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "name": "CervixAgent fixed three-phase research workflow",
+  "locked": true,
+  "source": "QB-20260630-1 山东大学宫颈癌方案报告专业.docx",
+  "policy": {
+    "protocol_changes_by_agent": false,
+    "physical_experiments_by_agent": false,
+    "commercial_unlicensed_software": false,
+    "actual_software_must_be_recorded": true
+  },
+  "fixed_parameters": {
+    "compound_sources": ["ECNPDB", "COCONUT", "LOTUS"],
+    "expected_compound_count": "280000+",
+    "michael_acceptor_types": [
+      "alpha,beta-unsaturated carbonyl",
+      "lactone",
+      "nitroalkene",
+      "quinone"
+    ],
+    "filters": {
+      "mw_max": 500,
+      "logp_max": 5,
+      "hbd_max": 5,
+      "hba_max": 10,
+      "pains_filter": true
+    },
+    "targets": {
+      "hpv16_e6": {
+        "pdb": "4XR8",
+        "reactive_residues": ["CYS51", "CYS58"]
+      },
+      "ido1": {
+        "pdb": "2D0T",
+        "reactive_residues": ["CYS239"]
+      }
+    },
+    "primary_screen_expected": "5000-10000",
+    "experimental_candidates": 20,
+    "md_candidates": 5,
+    "md": {
+      "duration_ns": 50,
+      "engine": "GROMACS",
+      "forcefield": "CHARMM36",
+      "analyses": ["RMSD", "RMSF", "contact_frequency", "MM/PBSA"]
+    }
+  },
+  "implementation": {
+    "proposal_named_docking_engine": "Glide CovDock",
+    "current_docking_engine": "TBD_OPEN_SOURCE",
+    "reason": "No licensed Schrodinger installation is currently available.",
+    "server_access": "unavailable"
+  },
+  "requires_confirmation": [
+    "Exact SMARTS definitions for every Michael acceptor class",
+    "Compound standardization, tautomer, stereochemistry and protonation rules",
+    "Docking grid centers and dimensions",
+    "Open-source covalent docking reaction mapping and search parameters",
+    "Integrated ranking weights and tie-break rules",
+    "MD replicate count and detailed simulation parameters",
+    "Experimental data file schemas and sample identifiers"
+  ],
+  "phases": [
+    {
+      "id": "phase_1",
+      "name": "CervixAgent construction and electrophilic natural-product virtual screening",
+      "steps": [
+        {"id": "P1-01", "name": "Initialize project, environment and immutable run records"},
+        {"id": "P1-02", "name": "Ingest ECNPDB, COCONUT and LOTUS compound data"},
+        {"id": "P1-03", "name": "Build CervixKG and GraphRAG literature evidence index"},
+        {"id": "P1-04", "name": "Apply Michael acceptor, Lipinski and PAINS primary filters"},
+        {"id": "P1-05", "name": "Prepare HPV16 E6 and IDO1 target structures", "human_gate": true},
+        {"id": "P1-06", "name": "Run dual-target covalent docking with the recorded legal engine"},
+        {"id": "P1-07", "name": "Integrate docking and literature evidence and rank candidates"},
+        {"id": "P1-08", "name": "Run 50 ns GROMACS MD for TOP5 candidates"},
+        {"id": "P1-09", "name": "Freeze and export TOP20 candidates", "human_gate": true}
+      ]
+    },
+    {
+      "id": "phase_2",
+      "name": "In-vitro dual-target covalent mechanism validation",
+      "steps": [
+        {"id": "P2-01", "name": "Import TOP20 cytotoxicity, p53 and Kyn/Trp screening data"},
+        {"id": "P2-02", "name": "Select and approve TOP5 candidates", "human_gate": true},
+        {"id": "P2-03", "name": "Import alkyne-probe, click-chemistry and LC-MS/MS evidence"},
+        {"id": "P2-04", "name": "Import HPV E6-p53 axis validation evidence"},
+        {"id": "P2-05", "name": "Import IDO1 enzyme, Kyn/Trp and CETSA evidence"},
+        {"id": "P2-06", "name": "Import TAM and CD8 T-cell functional evidence"},
+        {"id": "P2-07", "name": "Approve the candidate entering TC-1 validation", "human_gate": true}
+      ]
+    },
+    {
+      "id": "phase_3",
+      "name": "TC-1 combination-treatment validation and CC-IRS modeling",
+      "steps": [
+        {"id": "P3-01", "name": "Create the fixed TC-1 study data package and identifiers", "human_gate": true},
+        {"id": "P3-02", "name": "Import tumor growth, survival and complete-response data"},
+        {"id": "P3-03", "name": "Import TIL, IHC, Kyn/Trp and RNA-seq data"},
+        {"id": "P3-04", "name": "Build and evaluate the CC-IRS random-forest model"},
+        {"id": "P3-05", "name": "Generate final datasets, reports, code and audit package", "human_gate": true}
+      ]
+    }
+  ]
+}
+
