@@ -1,0 +1,22 @@
+{
+  "schema_version": 2,
+  "profile_id": "datacenter-poweredge-t640-project-local",
+  "effective_date": "2026-07-24",
+  "project_root": "/data2/lxj/projects/CervixAgent",
+  "literature_root": "/data2/lxj/projects/CervixAgent/data/literature",
+  "models_root": "/data2/lxj/projects/CervixAgent/models",
+  "vectorstore_root": "/data2/lxj/projects/CervixAgent/vectorstores",
+  "datasets_root": "/data2/lxj/projects/CervixAgent/data",
+  "runs_root": "/data2/lxj/projects/CervixAgent/runs",
+  "temporary_root": "/data2/lxj/projects/CervixAgent/tmp",
+  "environments_root": "/data2/lxj/projects/CervixAgent/.envs",
+  "policies": {
+    "all_cervixagent_files_must_remain_under_project_root": true,
+    "raw_literature_is_read_only": true,
+    "raw_compound_snapshots_are_read_only": true,
+    "runtime_outputs_must_not_be_written_to_raw_roots": true,
+    "temporary_outputs_must_be_reproducible": true,
+    "unlicensed_commercial_software_is_forbidden": true
+  },
+  "supersedes": "configs/server_paths.json"
+}

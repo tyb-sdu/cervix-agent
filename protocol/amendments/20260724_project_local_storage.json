@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "amendment_id": "EXEC-20260724-002",
+  "title": "Project-local storage isolation",
+  "effective_date": "2026-07-24",
+  "approval": {
+    "status": "approved_by_project_owner",
+    "basis": "The project owner explicitly required all CervixAgent files to be stored under the CervixAgent project directory so they are not mixed with other users' files.",
+    "recorded_by": "CervixAgent"
+  },
+  "project_root": "/data2/lxj/projects/CervixAgent",
+  "requirements": [
+    "Literature files must be under the project root.",
+    "Models and vector stores must be under the project root.",
+    "Datasets, runs, temporary files, and Python environments must be under the project root.",
+    "No other user's directory may be modified."
+  ],
+  "scientific_protocol_changed": false,
+  "storage_layout_changed": true
+}

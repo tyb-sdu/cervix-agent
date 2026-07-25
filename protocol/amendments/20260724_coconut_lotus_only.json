@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "amendment_id": "EXEC-20260724-001",
+  "title": "COCONUT and LOTUS two-source execution decision",
+  "effective_date": "2026-07-24",
+  "approval": {
+    "status": "approved_by_project_owner",
+    "basis": "The project owner explicitly instructed CervixAgent to discontinue ECNPDB and screen only COCONUT and LOTUS.",
+    "recorded_by": "CervixAgent"
+  },
+  "preserved_original": {
+    "path": "protocol/original/workflow.lock.json",
+    "must_not_be_overwritten": true
+  },
+  "changes": [
+    {
+      "field": "compound_sources",
+      "original": [
+        "ECNPDB",
+        "COCONUT",
+        "LOTUS"
+      ],
+      "effective_execution_value": [
+        "COCONUT",
+        "LOTUS"
+      ],
+      "reason": "Direct project-owner decision; ECNPDB is out of scope for the current execution."
+    },
+    {
+      "field": "server_access",
+      "original": "unavailable",
+      "effective_execution_value": "available",
+      "server": "datacenter-PowerEdge-T640",
+      "project_root": "/data2/lxj/projects/CervixAgent",
+      "literature_root": "/data2/lxj/CervixAgent文献"
+    },
+    {
+      "field": "docking_engine",
+      "original": "Glide CovDock named in the proposal",
+      "effective_execution_value": "TBD_LEGAL_OPEN_SOURCE_AFTER_BENCHMARK",
+      "reason": "No licensed Schrodinger installation is available.",
+      "human_gate": "A computational-chemistry reviewer must approve the engine, reaction mapping, grid, and benchmark before formal docking."
+    }
+  ],
+  "unchanged_scope": [
+    "The three-phase research order is unchanged.",
+    "The scientific targets and reactive residues are unchanged.",
+    "The Michael acceptor, Lipinski, and PAINS requirements are unchanged.",
+    "The in-vitro and in-vivo experimental order is unchanged.",
+    "The agent may execute approved steps but may not invent, delete, or reorder scientific steps."
+  ]
+}
