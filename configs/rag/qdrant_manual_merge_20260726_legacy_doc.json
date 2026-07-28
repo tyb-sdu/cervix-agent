@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "collection": "cervixagent_literature_pilot_text_qwen3vl8b_4096_v1",
+  "qdrant_path": "/data2/lxj/projects/CervixAgent/vectorstores/qdrant",
+  "vector_size": 4096,
+  "embedding_model": "Qwen/Qwen3-VL-Embedding-8B",
+  "embedding_model_path": "/data2/lxj/projects/CervixAgent/models/weights/qwen3-vl-embedding-8b",
+  "source_chunk_manifest": "/data2/lxj/projects/CervixAgent/data/processed/literature/manual_merge_20260726/runs/legacy_doc_20260726T040624Z/chunks/v1_char1200_overlap180_structured/chunks.jsonl",
+  "source_chunk_manifest_sha256": "ab26e80aa3c76dc985d6eaeed6f32491c640b97f9a796a9b3261f966b1420365",
+  "expected_incremental_chunk_count": 15,
+  "state_path": "/data2/lxj/projects/CervixAgent/runs/qdrant_indexing/manual_merge_20260726_legacy_doc_state.json",
+  "report_path": "/data2/lxj/projects/CervixAgent/reports/qdrant/manual_merge_20260726_legacy_doc_indexing.json",
+  "source_files_modified": false
+}

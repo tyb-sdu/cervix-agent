@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="/data2/lxj/projects/CervixAgent"
+exec "$ROOT/.envs/vl_rag/bin/python" "$ROOT/scripts/cervixagent-rag.py" "$@"

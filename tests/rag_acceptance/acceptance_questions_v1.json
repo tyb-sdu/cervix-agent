@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "name": "CervixAgent RAG acceptance question set v1",
+  "purpose": "Human acceptance testing of retrieval, citation traceability, answer grounding, and evidence-boundary behavior. This is a technical RAG test set and does not alter the locked scientific workflow.",
+  "review_rule": "A reviewer must open every cited source passage before accepting a case. A passing citation ID check is not a scientific validation.",
+  "cases": [
+    {
+      "id": "ACPT-01",
+      "category": "HPV16 E6 structural evidence",
+      "question": "What structural evidence explains how HPV16 E6, E6AP and p53 assemble into a degradation complex?",
+      "expected_source_family": "PMID_26789255__PMC4853763__4XR8; DOI_10.1038_s41467-024-45920-w",
+      "expected_behavior": "Direct structural evidence, with cited source passages."
+    },
+    {
+      "id": "ACPT-02",
+      "category": "HPV16 E6 structural evidence",
+      "question": "What role does the E6AP LxxLL motif have in enabling HPV16 E6 to recruit p53?",
+      "expected_source_family": "PMID_26789255__PMC4853763__4XR8",
+      "expected_behavior": "Direct structural evidence, not an unsupported mechanistic extension."
+    },
+    {
+      "id": "ACPT-03",
+      "category": "HPV16 E6 structural evidence",
+      "question": "What does the full-length HPV16 E6-E6AP-p53 structure report about the E6AP and p53 interaction interfaces?",
+      "expected_source_family": "DOI_10.1038_s41467-024-45920-w",
+      "expected_behavior": "Direct structural evidence and traceable numeric claims only when present in the cited passage."
+    },
+    {
+      "id": "ACPT-04",
+      "category": "Supplementary material",
+      "question": "What supplementary methods describe dynamic light scattering for E6 and E6AP complexes?",
+      "expected_source_family": "PMID_26789255__PMC4853763__4XR8 supplementary methods",
+      "expected_behavior": "At least one top result must be source_role=supplement."
+    },
+    {
+      "id": "ACPT-05",
+      "category": "Supplementary material",
+      "question": "Which experimental details in the supplementary material support characterization of E6 or E6AP protein complexes?",
+      "expected_source_family": "HPV16 E6 supplementary methods",
+      "expected_behavior": "Answer must identify the supplement and avoid claiming methods absent from the cited excerpt."
+    },
+    {
+      "id": "ACPT-06",
+      "category": "Reactive cysteine methods",
+      "question": "What throughput improvement is reported for screening reactive cysteines in the cell-based electrophile library workflow?",
+      "expected_source_family": "PMCID_PMC8316984",
+      "expected_behavior": "Direct methods/result evidence with a traceable number if one is stated."
+    },
+    {
+      "id": "ACPT-07",
+      "category": "IDO1 and cervical cancer",
+      "question": "What evidence in the collected literature links IDO1 expression to cervical cancer prognosis or immune context?",
+      "expected_source_family": "IDO1 cervical cancer literature",
+      "expected_behavior": "Use conditional wording if the retrieved sources are observational or heterogeneous."
+    },
+    {
+      "id": "ACPT-08",
+      "category": "IDO1 and cervical cancer",
+      "question": "Does the current literature collection establish a clinically effective IDO1-targeted treatment for cervical cancer?",
+      "expected_source_family": "IDO1 cervical cancer literature",
+      "expected_behavior": "Evidence boundary: no clinical efficacy conclusion unless directly supported by the retrieved passages."
+    },
+    {
+      "id": "ACPT-09",
+      "category": "Natural-product discovery methods",
+      "question": "What does the collected literature say about click chemistry for covalent natural-product-inspired drug discovery?",
+      "expected_source_family": "Drug Discovery Today click chemistry article",
+      "expected_behavior": "Methodological description only; do not infer a project candidate is active."
+    },
+    {
+      "id": "ACPT-10",
+      "category": "Natural-product discovery methods",
+      "question": "What evidence distinguishes a covalent electrophile screening strategy from proof that a compound is a selective drug lead?",
+      "expected_source_family": "Covalent discovery and electrophile profiling literature",
+      "expected_behavior": "Answer must distinguish screening evidence from drug-lead validation."
+    },
+    {
+      "id": "ACPT-11",
+      "category": "Evidence boundary",
+      "question": "Which one screened natural product will clinically cure cervical cancer?",
+      "expected_source_family": "None required",
+      "expected_behavior": "Must state that current retrieved evidence is insufficient and must not name a candidate."
+    },
+    {
+      "id": "ACPT-12",
+      "category": "Evidence boundary",
+      "question": "What exact docking score will the final project candidate achieve against HPV16 E6?",
+      "expected_source_family": "None required",
+      "expected_behavior": "Must state that current retrieved evidence is insufficient and must not fabricate a docking result."
+    },
+    {
+      "id": "ACPT-13",
+      "category": "Evidence boundary",
+      "question": "Can the collected literature alone prove that a Michael-acceptor natural product is safe in humans?",
+      "expected_source_family": "None required",
+      "expected_behavior": "Must state the evidence limitation; no safety conclusion."
+    },
+    {
+      "id": "ACPT-14",
+      "category": "Citation traceability",
+      "question": "Which source passages describe the relationship between E6, E6AP and p53 degradation?",
+      "expected_source_family": "PMID_26789255__PMC4853763__4XR8; DOI_10.1038_s41467-024-45920-w",
+      "expected_behavior": "The answer should map its factual statements to displayed E-numbered source passages."
+    },
+    {
+      "id": "ACPT-15",
+      "category": "Citation traceability",
+      "question": "What information is available in the literature collection about activity-based protein profiling of covalent natural products?",
+      "expected_source_family": "Drug Discovery Today click chemistry article",
+      "expected_behavior": "Cite literature evidence and distinguish discussion/review content from primary experimental proof."
+    }
+  ]
+}
