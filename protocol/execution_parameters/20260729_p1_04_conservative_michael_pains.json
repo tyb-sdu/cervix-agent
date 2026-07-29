@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "record_type": "P1-04 executable screening parameter record",
+  "created_at": "2026-07-29",
+  "authority": "Project owner delegated executable Michael SMARTS and PAINS choices to the agent on 2026-07-29.",
+  "scope": "Conservative, high-precision structural primary screen. It is a reproducible structural alert screen, not a prediction of measured covalent reactivity.",
+  "input_handling": {
+    "structure_representation": "Use P1-02 canonical SMILES as supplied.",
+    "salt_fragment_policy": "Do not strip salts or select a parent fragment. Multi-fragment records remain needs_review.",
+    "tautomer_policy": "No tautomer canonicalization beyond the existing P1-02 canonical SMILES.",
+    "stereochemistry_policy": "Do not erase or infer stereochemistry.",
+    "protonation_policy": "Do not change protonation state."
+  },
+  "lipinski": {
+    "mw_max": 500.0,
+    "logp_max": 5.0,
+    "hbd_max": 5,
+    "hba_max": 10,
+    "comparison": "A value equal to its threshold passes; only values greater than the threshold fail."
+  },
+  "michael_acceptor": {
+    "decision_rule": "A single-fragment Lipinski-pass structure is Michael-positive when it matches one or more of the four strict structural rules below.",
+    "matching": "RDKit substructure matching on the input canonical SMILES; useChirality=False.",
+    "rules": [
+      {
+        "id": "alpha_beta_unsaturated_carbonyl",
+        "label": "alpha,beta-unsaturated carbonyl",
+        "smarts": "[O;X1]=[C;X3]-[C;X3]=[C;X3]",
+        "rationale": "Requires the O=C-C=C conjugation path; it does not label a saturated carbonyl as a Michael acceptor."
+      },
+      {
+        "id": "conjugated_lactone",
+        "label": "conjugated lactone",
+        "smarts": "[O;R]@[C;R](=[O;X1])-[C;R]=[C]",
+        "rationale": "A strict lactone rule: the ester oxygen-to-acyl-carbon bond is a ring bond and the lactone is alpha,beta-unsaturated. Saturated lactones are deliberately not called Michael acceptors."
+      },
+      {
+        "id": "nitroalkene",
+        "label": "nitroalkene",
+        "smarts": "[C;X3]=[C;X3]-[N+;X3](=[O;X1])-[O-;X1]",
+        "rationale": "Requires a normal charged nitro group directly attached to a vinylic carbon; nitroalkanes and nitroarenes do not match."
+      },
+      {
+        "id": "quinone",
+        "label": "carbocyclic ortho- or para-quinone",
+        "smarts": "[$([O;X1]=[C;R]1-[C;R]=[C;R]-[C;R](=[O;X1])-[C;R]=[C;R]-1),$([O;X1]=[C;R]1-[C;R](=[O;X1])-[C;R]=[C;R]-[C;R]=[C;R]-1)]",
+        "rationale": "Requires a non-aromatic six-membered carbocyclic o- or p-quinone core. Quinone methides, heteroquinones and semiquinones are not included in this conservative definition."
+      }
+    ]
+  },
+  "pains": {
+    "implementation": "RDKit FilterCatalog",
+    "catalog": "PAINS (the RDKit union of PAINS_A, PAINS_B and PAINS_C)",
+    "expected_entry_count": 480,
+    "decision_rule": "Any PAINS catalog match flags the structure and excludes it from the strict primary-candidate output. The audit output preserves every matched description for later expert review.",
+    "application_order": "Apply only after a structure has passed Lipinski and matched a strict Michael rule; this is logically equivalent for strict-pass selection and avoids needless computation on ineligible structures."
+  },
+  "status_definitions": {
+    "pass_primary_filter": "single fragment, passes all four Lipinski thresholds, matches at least one strict Michael rule, and has no PAINS match",
+    "fail_lipinski": "single fragment with one or more fixed-threshold Lipinski failures",
+    "fail_michael": "single fragment that passes Lipinski but matches no strict Michael rule",
+    "fail_pains": "single fragment that passes Lipinski and matches Michael but has one or more PAINS matches",
+    "needs_review": "multi-fragment or unreparseable structure; no parent-fragment choice is made"
+  },
+  "references": [
+    {
+      "title": "RDKit Book: SMARTS reference",
+      "url": "https://www.rdkit.org/docs/RDKit_Book.html"
+    },
+    {
+      "title": "RDKit FilterCatalog API",
+      "url": "https://www.rdkit.org/docs/source/rdkit.Chem.rdfiltercatalog.html"
+    }
+  ]
+}
