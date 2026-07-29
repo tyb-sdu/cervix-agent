@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "record_type": "P1-04 executable screening parameter record",
   "created_at": "2026-07-29",
   "authority": "Project owner delegated executable Michael SMARTS and PAINS choices to the agent on 2026-07-29.",
@@ -10,6 +10,13 @@
     "tautomer_policy": "No tautomer canonicalization beyond the existing P1-02 canonical SMILES.",
     "stereochemistry_policy": "Do not erase or infer stereochemistry.",
     "protonation_policy": "Do not change protonation state."
+  },
+  "integrity_controls": {
+    "input_snapshot": "Copy the input queue into the run directory before reading and verify its SHA-256 against the source before and after the copy.",
+    "require_single_fragment": true,
+    "recompute_lipinski_descriptors": true,
+    "descriptor_comparison_tolerance": 0.00001,
+    "on_input_inconsistency": "Mark the record needs_review and never place it in strict_primary_candidates."
   },
   "lipinski": {
     "mw_max": 500.0,
