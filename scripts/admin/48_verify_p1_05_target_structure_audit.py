@@ -65,7 +65,7 @@ def main() -> int:
     lock = load_json(lock_path)
     locked_targets = lock["fixed_parameters"]["targets"]
     observation_count = 0
-    mismatch_count = 0
+    scheme_observation_nonmatch_count = 0
     missing_count = 0
     ambiguous_count = 0
     for target in audit["targets"]:
@@ -98,7 +98,7 @@ def main() -> int:
                     ]:
                         missing_count += 1
                     elif not observation["residue_name_matches"]:
-                        mismatch_count += 1
+                        scheme_observation_nonmatch_count += 1
                     if observation.get("physical_site_key") is None:
                         ambiguous_count += 1
 
@@ -130,7 +130,13 @@ def main() -> int:
         "run_dir": str(run_dir),
         "manifest_artifact_count": len(expected_artifacts),
         "observation_count": observation_count,
-        "mismatch_count": mismatch_count,
+        "scheme_observation_nonmatch_count": (
+            scheme_observation_nonmatch_count
+        ),
+        "scheme_observation_nonmatch_note": (
+            "A nonmatch in one numbering interpretation is not automatically "
+            "a residue-identity conflict; consult blocking_issue_counts."
+        ),
         "missing_count": missing_count,
         "ambiguous_count": ambiguous_count,
         "blocking_issue_counts": audit["blocking_issue_counts"],

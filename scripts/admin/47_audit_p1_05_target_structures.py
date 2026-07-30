@@ -694,59 +694,98 @@ def audit_target(target: TargetInput, project_root: Path) -> dict[str, Any]:
                 ),
             }
         )
+    scheme_keys = (
+        ("pdb_author", "pdb_author_interpretation"),
+        ("reference_database", "reference_database_interpretation"),
+    )
+    raw_scheme_nonmatch_count = 0
     for check in residue_checks:
-        for chain_check in check["chain_checks"]:
-            for scheme_key in (
-                "pdb_author_interpretation",
-                "reference_database_interpretation",
+        matching_schemes = []
+        missing_observations = []
+        observed_by_scheme: dict[str, list[str | None]] = {}
+        for scheme_name, scheme_key in scheme_keys:
+            observations = [
+                chain_check[scheme_key] for chain_check in check["chain_checks"]
+            ]
+            observed_by_scheme[scheme_name] = sorted(
+                {
+                    observation["observed_residue_name"]
+                    for observation in observations
+                },
+                key=lambda value: "" if value is None else value,
+            )
+            raw_scheme_nonmatch_count += sum(
+                not observation["residue_name_matches"]
+                for observation in observations
+            )
+            missing_observations.extend(
+                f"{chain_check['chain']}:{scheme_name}"
+                for chain_check, observation in zip(
+                    check["chain_checks"], observations
+                )
+                if not observation["scheme_row_present"]
+                or not observation["coordinate_present"]
+            )
+            if all(
+                observation["scheme_row_present"]
+                and observation["coordinate_present"]
+                and observation["residue_name_matches"]
+                for observation in observations
             ):
-                observation = chain_check[scheme_key]
-                if not observation["scheme_row_present"]:
-                    blocking_issues.append(
-                        {
-                            "id": "TARGET_RESIDUE_MAPPING_MISSING",
-                            "severity": "hard",
-                            "detail": (
-                                f"{check['locked_label']} has no {scheme_key} "
-                                f"mapping on chain {chain_check['chain']}."
-                            ),
-                        }
-                    )
-                elif not observation["coordinate_present"]:
-                    blocking_issues.append(
-                        {
-                            "id": "TARGET_RESIDUE_COORDINATE_MISSING",
-                            "severity": "hard",
-                            "detail": (
-                                f"{check['locked_label']} maps to an absent "
-                                f"coordinate on chain {chain_check['chain']} "
-                                f"under {scheme_key}."
-                            ),
-                        }
-                    )
-                elif not observation["residue_name_matches"]:
-                    blocking_issues.append(
-                        {
-                            "id": "TARGET_RESIDUE_NAME_MISMATCH",
-                            "severity": "hard",
-                            "detail": (
-                                f"{check['locked_label']} expects "
-                                f"{observation['expected_residue_name']} but "
-                                f"observes {observation['observed_residue_name']} "
-                                f"on chain {chain_check['chain']} under "
-                                f"{scheme_key}."
-                            ),
-                        }
-                    )
+                matching_schemes.append(scheme_name)
+
+        if missing_observations:
+            blocking_issues.append(
+                {
+                    "id": "TARGET_RESIDUE_MAPPING_OR_COORDINATE_MISSING",
+                    "severity": "hard",
+                    "detail": (
+                        f"{check['locked_label']} is missing deterministic "
+                        f"observations at {', '.join(missing_observations)}."
+                    ),
+                }
+            )
+        elif not matching_schemes:
+            blocking_issues.append(
+                {
+                    "id": "RESIDUE_IDENTITY_CONFLICT",
+                    "severity": "hard",
+                    "detail": (
+                        f"{check['locked_label']} does not name the observed "
+                        "residue under either audited numbering system; "
+                        f"observed={observed_by_scheme}."
+                    ),
+                }
+            )
+        elif len(matching_schemes) == 1:
+            blocking_issues.append(
+                {
+                    "id": "NUMBERING_SCHEME_SELECTION_REQUIRED",
+                    "severity": "human_gate",
+                    "detail": (
+                        f"{check['locked_label']} matches only under "
+                        f"{matching_schemes[0]} numbering."
+                    ),
+                }
+            )
+
+    alias_groups: dict[tuple[str, str], list[str]] = {}
     for alias in cross_numbering_aliases:
+        key = (
+            alias["left_locked_label"],
+            alias["right_locked_label"],
+        )
+        alias_groups.setdefault(key, []).append(alias["physical_site_key"])
+    for (left_label, right_label), physical_sites in sorted(alias_groups.items()):
         blocking_issues.append(
             {
                 "id": "CROSS_NUMBERING_ALIAS",
-                "severity": "hard",
+                "severity": "human_gate",
                 "detail": (
-                    f"{alias['left_locked_label']} and "
-                    f"{alias['right_locked_label']} resolve to "
-                    f"{alias['physical_site_key']}."
+                    f"{left_label} and {right_label} resolve to the same "
+                    "physical residue across numbering systems at "
+                    f"{', '.join(sorted(physical_sites))}; they cannot be "
+                    "treated as two independent covalent sites without review."
                 ),
             }
         )
@@ -820,6 +859,7 @@ def audit_target(target: TargetInput, project_root: Path) -> dict[str, Any]:
         "cross_numbering_aliases": cross_numbering_aliases,
         "all_coordinate_cysteines_in_target_chains": cysteines,
         "blocking_issues": blocking_issues,
+        "raw_scheme_observation_nonmatch_count": raw_scheme_nonmatch_count,
         "target_residue_gate_passes": target_residue_gate_passes,
         "target_residue_gate_status": (
             "pass" if target_residue_gate_passes else "blocked_pending_human_resolution"
