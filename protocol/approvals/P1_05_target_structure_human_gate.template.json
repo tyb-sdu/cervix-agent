@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "record_type": "P1-05 target structure human gate approval template",
+  "status": "pending",
+  "template_only": true,
+  "execution_authorized": false,
+  "formal_p1_05_complete": false,
+  "docking_authorized": false,
+  "source_audit_run": "data/processed/p1_05_target_structure_audits/20260730T130000Z_read_only_preflight_v2",
+  "workflow_lock_sha256": "66377e0947d57be845eb838b382890e1e2920864960660401300212e1628e6ec",
+  "coconut_lotus_amendment_sha256": "d2f493a3de88f09dfc9fc20b36822d107c6e5c5d00de0081275e6edc924e11ed",
+  "decisions": {
+    "hpv16_e6": {
+      "numbering_relationship_confirmed": null,
+      "cys51_cys58_are_same_physical_site": null,
+      "approved_chain_ids": [],
+      "approved_residue_mappings": [],
+      "engineered_4c4s_construct_handling": null,
+      "zinc_e6ap_p53_water_handling": null,
+      "evidence_or_amendment_id": null
+    },
+    "ido1": {
+      "cys239_conflict_resolved": null,
+      "approved_chain_ids": [],
+      "approved_residue_mappings": [],
+      "heme_ligand_water_buffer_handling": null,
+      "evidence_or_amendment_id": null
+    },
+    "docking": {
+      "legal_open_source_engine_and_version": null,
+      "license_confirmed": false,
+      "covalent_reaction_mapping": null,
+      "grid_centers_and_dimensions": null,
+      "search_parameters": null,
+      "benchmark_dataset": null,
+      "benchmark_acceptance_criteria": null,
+      "benchmark_passed": false
+    }
+  },
+  "reviewer": {
+    "name": null,
+    "organization_and_specialty": null,
+    "reviewed_at": null,
+    "decision": null,
+    "signature_or_record_id": null,
+    "notes": null
+  },
+  "guard": "This unsigned template is not an approval and must never authorize receptor preparation or docking."
+}
